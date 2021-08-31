@@ -7,9 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.1] - 2021-08-31
+
 ### Added
 
 - Add aws-cni base manifest.
 - Add github workflows.
 
-[Unreleased]: https://github.com/giantswarm/aws-cni-app/tree/master
+[Unreleased]: https://github.com/giantswarm/aws-cni-app/compare/v0.0.1...HEAD
+[0.0.1]: https://github.com/giantswarm/aws-cni-app/releases/tag/v0.0.1
