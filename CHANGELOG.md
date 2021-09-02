@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.2] - 2021-09-02
 
+### Changed
+
+- use CRI socket instead of docker.
+
 ## [0.0.1] - 2021-08-31
 
 ### Added
