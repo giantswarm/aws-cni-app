@@ -9,7 +9,7 @@ project:
 image:
   registry: quay.io
   name: giantswarm/aws-cni
-  initName: giantswarm/aws-cni-init  
+  initName: giantswarm/aws-cni-init
   tag: v1.8.0
   pullPolicy: IfNotPresent
 
