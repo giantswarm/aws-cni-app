@@ -16,4 +16,4 @@ image:
 additionalTags: "{}"
 warmIPTarget: "10"
 minimumIPTarget: "40"
-externalSNATEnabled: "false"
+externalSNATEnabled: false
