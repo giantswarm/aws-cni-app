@@ -10,10 +10,11 @@ image:
   registry: quay.io
   name: giantswarm/aws-cni
   initName: giantswarm/aws-cni-init
-  tag: v1.8.0
+  tag: v1.10.2-nftables
   pullPolicy: IfNotPresent
 
 additionalTags: "{}"
 warmIPTarget: "10"
 minimumIPTarget: "40"
 externalSNATEnabled: false
+prefixEnabled: false
