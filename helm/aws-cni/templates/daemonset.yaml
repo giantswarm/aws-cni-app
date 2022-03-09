@@ -59,6 +59,13 @@ spec:
         - image: {{ .Values.image.registry }}/{{ .Values.image.initName }}:{{ .Values.image.tag }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           name: aws-vpc-cni-init
+          env:
+            - name: DISABLE_TCP_EARLY_DEMUX
+              value: "false"
+            - name: ENABLE_IPv4
+              value: "true"
+            - name: ENABLE_IPv6
+              value: "false"
           securityContext:
             privileged: true
           volumeMounts:
@@ -73,12 +80,14 @@ spec:
           name: aws-node
           readinessProbe:
             exec:
-              command: ["/app/grpc-health-probe", "-addr=:50051"]
-            initialDelaySeconds: 35
+              command: ["/app/grpc-health-probe", "-addr=:50051", "-connect-timeout=5s","-rpc-timeout=5s"]
+            initialDelaySeconds: 10
+            timeoutSeconds: 10
           livenessProbe:
             exec:
-              command: ["/app/grpc-health-probe", "-addr=:50051"]
-            initialDelaySeconds: 35
+              command: ["/app/grpc-health-probe", "-addr=:50051", "-connect-timeout=5s","-rpc-timeout=5s"]
+            initialDelaySeconds: 60
+            timeoutSeconds: 10
           env:
             - name: ADDITIONAL_ENI_TAGS
               value: '{{ .Values.additionalTags }}'
@@ -97,6 +106,10 @@ spec:
             - name: DISABLE_INTROSPECTION
               value: "false"
             - name: DISABLE_METRICS
+              value: "false"
+            - name: ENABLE_IPv4
+              value: "true"
+            - name: ENABLE_IPv6
               value: "false"
             - name: WARM_IP_TARGET
               value: "{{ .Values.warmIPTarget }}"
@@ -123,6 +136,15 @@ spec:
             ## If we left this enabled, cross subnet communication doesn't work. Only affects ExternalSNAT=false.
             - name: AWS_VPC_K8S_CNI_RANDOMIZESNAT
               value: "none"
+            {{- end }}
+            {{- if eq .Values.prefixEnabled true }}
+            ## Deviation from original manifest - 6
+            ## If CNI prefix validation is enabled it will improve the speed of allocating IPs on a nitro based node (e.g. m5.2xlarge)
+            ## By setting a annotation on the Cluster CR it can be enabled or disabled.
+            - name: ENABLE_PREFIX_DELEGATION
+              value: "true"
+            - name: "WARM_PREFIX_TARGET"
+              value: "1"
             {{- end }}
             ## Deviation from original manifest - 5
             ## Explicit interface naming
