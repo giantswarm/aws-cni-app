@@ -10,7 +10,7 @@ image:
   registry: quay.io
   name: giantswarm/aws-cni
   initName: giantswarm/aws-cni-init
-  tag: v1.10.2-nftables
+  tag: v1.10.2-iptables
   pullPolicy: IfNotPresent
 
 additionalTags: "{}"
