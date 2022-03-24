@@ -1,0 +1,23 @@
+{{ if .Capabilities.APIVersions.Has "autoscaling.k8s.io/v1" }}
+{{ if .Values.verticalPodAutoscaler.enabled }}
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: aws-node
+  namespace: kube-system
+  labels:
+    k8s-app: aws-node
+spec:
+  resourcePolicy:
+    containerPolicies:
+    - containerName: aws-node
+      controlledValues: RequestsAndLimits
+      mode: Auto
+  targetRef:
+    apiVersion: apps/v1
+    kind: DaemonSet
+    name: aws-node
+  updatePolicy:
+    updateMode: Auto
+{{ end }}
+{{ end }}
